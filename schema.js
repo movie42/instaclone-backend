@@ -1,6 +1,9 @@
-import { loadFilesSync } from "@graphql-tools/load-files";
-import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
-import { makeExecutableSchema } from "@graphql-tools/schema";
+import {
+  loadFilesSync,
+  mergeTypeDefs,
+  mergeResolvers,
+  makeExecutableSchema,
+} from "graphql-tools";
 
 const loadedTypes = loadFilesSync(`${__dirname}/**/*.typeDefs.js`);
 const loadedResolvers = loadFilesSync(

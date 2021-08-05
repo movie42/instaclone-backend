@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import client from "../client";
 
 export default {
@@ -33,9 +34,14 @@ export default {
       if (!checkPassword) {
         return {
           ok: false,
-          error: "비밀번호가 틀렸습니다.",
+          error: "비밀번호를 틀리게 입력했습니다.",
         };
       }
+      const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+      return {
+        ok: true,
+        token,
+      };
     },
   },
 };
