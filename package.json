@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec babel-node server.js",
+    "migrate": "npx prisma migrate",
+    "studio": "npx prisma studio"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,17 @@
   "bugs": {
     "url": "https://github.com/movie42/instaclone-backend/issues"
   },
-  "homepage": "https://github.com/movie42/instaclone-backend#readme"
+  "homepage": "https://github.com/movie42/instaclone-backend#readme",
+  "dependencies": {
+    "@prisma/client": "^3.9.2",
+    "apollo-server": "^2.25.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "nodemon": "^2.0.15",
+    "prettier-plugin-prisma": "^3.9.0",
+    "prisma": "^3.9.2"
+  }
 }
