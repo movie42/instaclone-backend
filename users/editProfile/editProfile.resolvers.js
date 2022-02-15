@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import client from "../../client";
 
 export default {
@@ -6,7 +7,9 @@ export default {
     editProfile: async (
       _,
       { firstName, lastName, userName, email, password },
+      { token },
     ) => {
+      const { id } = await jwt.verify(token, process.env.JWT_SECRET_KEY);
       let hashPassword = null;
       if (password) {
         hashPassword = await bcrypt.hash(password, 10);
@@ -14,7 +17,7 @@ export default {
 
       const updateUser = await client.user.update({
         where: {
-          id: 2,
+          id,
         },
         data: {
           firstName,
