@@ -7,8 +7,14 @@ export default {
         .findUnique({
           where: { userName },
         })
-        .followers();
-      console.log(aFollwers);
+        .followers({
+          take: 5,
+          skip: (page - 1) * 5,
+        });
+      return {
+        ok: true,
+        followers,
+      };
     },
   },
 };
