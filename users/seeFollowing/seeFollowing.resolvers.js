@@ -2,7 +2,7 @@ import client from "../../client";
 
 export default {
   Query: {
-    seeFollowers: async (_, { userName, page }) => {
+    seeFollowing: async (_, { userName, lastId }) => {
       const existUser = await client.user.findUnique({
         where: {
           userName,
@@ -18,25 +18,19 @@ export default {
           error: "사용자를 찾을 수 없습니다.",
         };
       }
-      const followers = await client.user
+
+      const following = await client.user
         .findUnique({
           where: { userName },
         })
-        .followers({
+        .following({
           take: 5,
-          skip: (page - 1) * 5,
+          skip: lastId ? 1 : 0,
+          ...(lastId && { cursor: { id: lastId } }),
         });
-
-      const totalFollowers = await client.user.count({
-        where: {
-          following: { some: { userName } },
-        },
-      });
-
       return {
         ok: true,
-        followers,
-        totalPages: Math.ceil(totalFollowers / 5),
+        following,
       };
     },
   },
