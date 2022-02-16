@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import client from "../client";
 
 export const getUser = async (token) => {
@@ -6,7 +6,8 @@ export const getUser = async (token) => {
     if (!token) {
       return null;
     }
-    const { id } = await jwt.verify(token, process.env.SECRET_KEY);
+
+    const { id } = await jwt.verify(token, process.env.JWT_SECRET_KEY);
     const user = await client.user.findUnique({ where: { id } });
     if (user) {
       return user;
@@ -23,7 +24,7 @@ export const protectedResolver =
     if (!context.loggedInUser) {
       return {
         ok: false,
-        error: "Please log in to perform this action.",
+        error: "로그인이 필요합니다.",
       };
     }
     return resolverFunc(root, args, context, info);
