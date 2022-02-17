@@ -14,5 +14,9 @@ export default gql`
     followers: [User]
     following: [User]
     avatar: Upload
+    totalFollowing: Int!
+    totalFollowers: Int!
+    isMe: Boolean!
+    isFollowing: Boolean!
   }
 `;
